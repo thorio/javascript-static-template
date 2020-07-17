@@ -1,0 +1,20 @@
+{
+	"name": "javascript-generic-template",
+	"version": "1.0.0",
+	"description": "default setup for eslint and jsbeautify",
+	"dependencies": {},
+	"devDependencies": {
+		"eslint": "^7.4.0"
+	},
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thorio/javascript-generic-template.git"
+	},
+	"author": "thorou",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/thorio/javascript-generic-template/issues"
+	},
+	"homepage": "https://github.com/thorio/javascript-generic-template#readme"
+}
