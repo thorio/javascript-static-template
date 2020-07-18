@@ -1,6 +1,5 @@
 {
-	"editor.defaultFormatter": "HookyQR.beautify",
-	"editor.insertSpaces": false,
+	"editor.defaultFormatter": "Glavin001.unibeautify-vscode",
 	"files.exclude": {
 		".github": true,
 		"build": true,

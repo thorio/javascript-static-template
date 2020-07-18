@@ -30,7 +30,7 @@ HTML:
     - JS-Beautify
   << : *jsbeautify
 
-CSS:
+Less:
   beautifiers:
     - Prettier
     - Pretty Diff

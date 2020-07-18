@@ -1,20 +1,33 @@
 {
-	"name": "javascript-generic-template",
+	"name": "javascript-static-template",
 	"version": "1.0.0",
-	"description": "default setup for eslint and jsbeautify",
 	"dependencies": {},
 	"devDependencies": {
-		"eslint": "^7.4.0"
+		"@babel/core": "^7.10.5",
+		"@babel/preset-env": "^7.10.4",
+		"babelify": "^10.0.0",
+		"browser-sync": "^2.26.10",
+		"browserify": "^16.5.1",
+		"del": "^5.1.0",
+		"eslint": "^7.4.0",
+		"gulp": "^4.0.2",
+		"gulp-cached": "^1.1.1",
+		"gulp-concat": "^2.6.1",
+		"gulp-less": "^4.0.1",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-uglify": "^3.0.2",
+		"vinyl-buffer": "^1.0.1",
+		"vinyl-source-stream": "^2.0.0"
 	},
 	"scripts": {},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/thorio/javascript-generic-template.git"
+		"url": "git+https://github.com/thorio/javascript-static-template.git"
 	},
 	"author": "thorou",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://github.com/thorio/javascript-generic-template/issues"
+		"url": "https://github.com/thorio/javascript-static-template/issues"
 	},
-	"homepage": "https://github.com/thorio/javascript-generic-template#readme"
+	"homepage": "https://github.com/thorio/javascript-static-template#readme"
 }

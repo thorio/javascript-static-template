@@ -1,12 +1,13 @@
+/* eslint-env node */
 module.exports = {
 	"env": {
-		"commonjs": true,
-		"es6": true,
+		"browser": true,
+		"es2020": true,
 	},
 	"extends": "eslint:recommended",
 	"globals": {},
 	"parserOptions": {
-		"ecmaVersion": 2018,
+		"sourceType": "module",
 	},
 	"rules": {
 		"require-atomic-updates": "off",
@@ -19,6 +20,6 @@ module.exports = {
 		"comma-dangle": ["warn", {
 			"arrays": "always-multiline",
 			"objects": "always-multiline",
-		}]
-	}
-}
+		}],
+	},
+};
