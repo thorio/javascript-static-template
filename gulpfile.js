@@ -5,55 +5,60 @@ const gulp = require("gulp"),
 	less = require("gulp-less"),
 	uglify = require("gulp-uglify"),
 	sourcemaps = require('gulp-sourcemaps'),
+	gulpIf = require('gulp-if'),
 	source = require("vinyl-source-stream"),
 	buffer = require('vinyl-buffer'),
 	browserify = require("browserify"),
+	watchify = require("watchify"),
 	babelify = require("babelify"),
+	errorify = require("errorify"),
 	browserSync = require("browser-sync").create(),
+	yargs = require("yargs"),
 	del = require("del");
 
 const src_dir = "./src",
-	build_dir = "./build";
+	build_dir = "./build",
+	production = yargs.argv.production;
 
-function catchErr(err) {
-	console.error(err);
-	this.emit('end');
-}
+const browserifyInstance = browserify({
+		entries: [`main.js`],
+		cache: {},
+		packageCache: {},
+		debug: true,
+		basedir: `${src_dir}/js`,
+	})
+	.transform(babelify.configure({ // transpile es6+ code
+		presets: ["@babel/preset-env"],
+		sourceMaps: true,
+	}));
 
 function staticFiles() {
 	return gulp.src(`${src_dir}/static/**/*`)
 		.pipe(cache("static")) // do not copy file if it hasn't changed
-		.pipe(gulp.dest(build_dir));
+		.pipe(gulp.dest(build_dir))
+		.on("end", browserSync.reload);
 }
 
 function styles() {
 	return gulp.src(`${src_dir}/css/**/*.less`)
 		.pipe(sourcemaps.init())
 		.pipe(less())
-		.pipe(concat("bundle.min.css"))
+		.pipe(concat("bundle.css"))
 		.pipe(sourcemaps.write("./", { sourceRoot: "source://css" }))
 		.pipe(gulp.dest(`${build_dir}/css`))
 		.pipe(browserSync.stream());
 }
 
 function scripts() {
-	return browserify({
-			entries: [`main.js`],
-			debug: true,
-			basedir: `${src_dir}/js`,
-		})
-		.transform(babelify.configure({ // transpile es6+ code
-			presets: ["@babel/preset-env"],
-			sourceMaps: true,
-		}))
+	return browserifyInstance
 		.bundle()
-		.on('error', catchErr) // don't crash the watcher
-		.pipe(source("bundle.min.js"))
+		.pipe(source("bundle.js"))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(uglify())
+		.pipe(gulpIf(production, uglify({ output: { comments: "some" } })))
 		.pipe(sourcemaps.write('./', { sourceRoot: "source://js" }))
-		.pipe(gulp.dest(`${build_dir}/js`));
+		.pipe(gulp.dest(`${build_dir}/js`))
+		.on("end", browserSync.reload);
 }
 
 function clean() {
@@ -71,10 +76,11 @@ async function watch() {
 		browser: [],
 	});
 
-	gulp.watch(`${src_dir}/static`, staticFiles)
-		.on("change", browserSync.reload);
-	gulp.watch(`${src_dir}/js`, scripts)
-		.on("change", browserSync.reload);
+	watchify(browserifyInstance)
+		.plugin(errorify);
+
+	gulp.watch(`${src_dir}/static`, staticFiles);
+	gulp.watch(`${src_dir}/js`, scripts);
 	gulp.watch(`${src_dir}/css`, styles);
 }
 
