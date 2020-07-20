@@ -10,7 +10,7 @@ module.exports = {
 		"sourceType": "module",
 	},
 	"rules": {
-		"require-atomic-updates": "off",
+		"require-atomic-updates": "warn",
 		"no-unused-vars": "warn",
 		"no-useless-escape": "warn",
 		"no-await-in-loop": "warn",
@@ -21,5 +21,8 @@ module.exports = {
 			"arrays": "always-multiline",
 			"objects": "always-multiline",
 		}],
-	},
+		"no-constant-condition": ["warn", {
+			"checkLoops": false,
+		}],
+	}
 };
